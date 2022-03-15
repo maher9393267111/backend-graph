@@ -138,11 +138,44 @@ app.post("/removeimage", authCheckMiddleware, (req, res) => {
 
 // mongDb connection
 
-mongoose
-  .connect(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-  })
-  .then(() => console.log("DB Connected 🚀"));
+
+// mongoose
+//   .connect(process.env.MONGODB_URL, {
+//     // useNewUrlParser: true,
+
+// ////
+// useNewUrlParser: true,
+//  useUnifiedTopology: true,
+//  useCreateIndex: true,
+// // useFindAndModify: false
+
+
+
+// /////
+
+
+//   })
+//   .then(() => console.log("DB Connected 🚀"));
+
+
+const db = async () => {
+  try {
+      const success = await mongoose.connect(process.env.MONGODB_URL, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+          // useCreateIndex: true,
+          // useFindAndModify: false
+      });
+      console.log('DB Connected');
+  } catch (error) {
+      console.log('DB Connection Error', error);
+  }
+};
+// execute database connection
+db();
+
+
+
 
 // listen on port
 httpserver.listen(process.env.PORT, function () {
